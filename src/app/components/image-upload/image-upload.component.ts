@@ -9,20 +9,21 @@ import { FakeImageUploadService } from 'src/app/services/fake-image-upload.servi
   styleUrls: ['./image-upload.component.css'],
 })
 export class ImageUploadComponent {
+  imagesUrl: Array<string> = [];
 
-  imagesUrl: any = [];
-
-  constructor(private fakeImageUploadService: FakeImageUploadService) { }
+  constructor(private fakeImageUploadService: FakeImageUploadService) {}
 
   upload(pictureUploader: FileSelectComponent) {
-
-    pictureUploader.fileList.files.forEach(
-      p => {
-        const imageFile = p[0].rawFile
-        if (imageFile)
-          this.fakeImageUploadService.uploadImage(imageFile).subscribe(response => {
+    pictureUploader.fileList.files.forEach((file) => {
+      const imageFile = file[0].rawFile;
+      if (imageFile)
+        this.fakeImageUploadService
+          .uploadImage(imageFile)
+          .subscribe((response) => {
             this.imagesUrl.push(response);
           });
-      })
+    });
+
+    pictureUploader.clearFiles();
   }
 }
