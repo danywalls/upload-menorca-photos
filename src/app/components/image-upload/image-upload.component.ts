@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FileSelectComponent } from '@progress/kendo-angular-upload';
+import { FileSelectComponent, UploadComponent } from '@progress/kendo-angular-upload';
 import { EMPTY, catchError, tap } from 'rxjs';
 import { FakeImageUploadService } from 'src/app/services/fake-image-upload.service';
 
@@ -11,19 +11,11 @@ import { FakeImageUploadService } from 'src/app/services/fake-image-upload.servi
 export class ImageUploadComponent {
   imagesUrl: Array<string> = [];
 
-  constructor(private fakeImageUploadService: FakeImageUploadService) {}
+  onFinish(file: UploadComponent) {
+    file.clearFiles();
+  }
 
-  upload(pictureUploader: FileSelectComponent) {
-    pictureUploader.fileList.files.forEach((file) => {
-      const imageFile = file[0].rawFile;
-      if (imageFile)
-        this.fakeImageUploadService
-          .uploadImage(imageFile)
-          .subscribe((response) => {
-            this.imagesUrl.push(response);
-          });
-    });
-
-    pictureUploader.clearFiles();
+  onSave(a : any) {
+    this.imagesUrl.push('https://random.imagecdn.app/500/150');
   }
 }

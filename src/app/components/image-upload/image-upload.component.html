@@ -1,6 +1,13 @@
-<kendo-fileselect #pictureFiles />
-<button (click)="upload(pictureFiles)">Upload</button>
+
+<kendo-upload
+#kendoupload
+saveUrl="saveAPI"
+removeUrl="removeAPI"
+(complete)="onFinish(kendoupload)"
+(success)="onSave(kendoupload)"
+/>
 
 <div class="images">
   <img *ngFor="let image of imagesUrl" [src]="image" alt="Uploaded Image">
 </div>
+

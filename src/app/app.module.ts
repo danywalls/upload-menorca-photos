@@ -5,23 +5,22 @@ import { AppComponent } from './app.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { UploadsModule } from '@progress/kendo-angular-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ApiInterceptor } from './services/api.interceptor';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ImageUploadComponent
-  ],
+  declarations: [AppComponent, ImageUploadComponent],
   imports: [
     BrowserModule,
     UploadsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
+  ]
+  ,
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
